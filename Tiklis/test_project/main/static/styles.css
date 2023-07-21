@@ -35,17 +35,9 @@
   font-family:'Poppins'; 
 }
 
-#sidenav a:hover {
-  font-family:'Poppins'; 
-  
-  color: #f1f1f1;
-}
-
-
-
-.main {
-  margin-left: 160px;
-  padding: 0px 10px;
+.sidebar li.active{
+  background: #528203;
+  border-radius: 8px;
 }
 
 .header {
@@ -53,3 +45,6 @@
   background: #67A600;
 }
 
+.menu-item {
+  margin-bottom: 5px;
+}
