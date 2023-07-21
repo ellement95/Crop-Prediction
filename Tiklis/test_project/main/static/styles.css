@@ -1,0 +1,49 @@
+
+.sidenav {
+  height:100%;
+  width:180px;
+  position: fixed;
+  z-index:1;
+  top:0;
+  left:0;
+  background-color:#ffffff;
+  overflow-x: hidden;
+  padding-top:20px;
+  resize: none;
+  
+}
+
+.sidenav a {
+  padding:6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #528203;
+  font-family:'Poppins'; 
+  display: black;
+}
+
+.sidenav a:hover {
+  font-family:'Poppins'; 
+  
+  color: #f1f1f1;
+}
+
+.sidenav h1 {
+  padding:6px 8px 6px 16px;
+  font-family:'Poppins'; 
+  font-weight: bold;
+  color: #528203;
+  letter-spacing: 8px;
+  
+}
+
+.main {
+  margin-left: 160px;
+  padding: 0px 10px;
+}
+
+.header {
+  padding: 5px;
+  background: #67A600;
+}
+

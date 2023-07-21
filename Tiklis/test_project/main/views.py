@@ -44,3 +44,6 @@ def create(response):
 	else:
 		form = CreateNewList()
 	return render(response, "main/create.html", {"form":form})
+
+def test(request):
+	return render(request,'main/test.html')
