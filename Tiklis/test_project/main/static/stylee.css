@@ -1,5 +1,5 @@
 body{
-    background: rgb(141, 141, 141);
+    background: rgb(196, 193, 193);
 }
 
 .horizontal-line {
@@ -23,10 +23,62 @@ body{
     height: 980px;
 }
 
-.content{
+/* .content{
     min-height: 100vh;
     width:100%
+} */
+
+/* CSS for the "row justify-content-center" class */
+.row.justify-content-center {
+  display: flex;
+  justify-content: left;
 }
+
+/* CSS for the "content" section */
+.content {
+  width: 100%;
+  max-width: 600px;
+  margin: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+/* CSS for the "location" section and its children */
+.location {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.location h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.horizontal-line {
+  border: 0;
+  height: 1px;
+  background-color: #ccc;
+  margin: 10px 0;
+}
+
+.location p {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.location button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.location button:hover {
+  background-color: #0056b3;
+}
+
 span.logo{
     display:flex;
     padding: 6px 12px 20px 16px;
@@ -46,5 +98,5 @@ h1.fs-4{
 .list-unstyled.px-2 li {
     margin-bottom: 10px; 
     padding: 6px;
-  }
-  
+}
+ 
