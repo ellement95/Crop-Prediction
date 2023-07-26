@@ -1,9 +1,9 @@
 {% extends 'main/base.html' %}
 
-{% block title %} Create New List {% endblock %}
+{% block title %} Price Prediction{% endblock %}
 
 {% block content %} 
-<h3>Create Page</h3>
+<h3>Upload CSV</h3>
 <form method="post" action="/create/" class="form-group">
     {% csrf_token %}
     <div class="input-group mb-3">

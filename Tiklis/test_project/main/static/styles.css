@@ -1,50 +1,86 @@
+body {
+  background: rgb(196, 193, 193);
+}
 
-#sidenav {
-  height:100%;
-  width:180px;
-  position: fixed;
-  z-index:1;
-  top:0;
-  left:0;
-  background-color:#ffffff;
-  overflow-x: hidden;
-  padding-top:20px;
+.main-container {
+  display: flex;
 }
-.logo {
-  width: 100px;
-}
-#sidenav h1 {
+
+#side_nav {
+  background: #ffffff;
+  flex: 1;
+  z-index: 1; 
   padding: 6px 12px 20px 16px;
-  font-family:'Poppins'; 
-  font-weight: bold;
+  min-width: 200px;
+  max-width: 200px;
+  height: 100vh;
+  overflow-x: hidden;
+  position: fixed;
+  top: 0; 
+  left: 0; 
+}
+
+.horizontal-line {
+  overflow: hidden;
+  background-color: #5cad25;
+  width: 100%;
+  height: 3rem;
+  z-index: 0; 
+  position: fixed;
+  top: 0; 
+  left: 0; 
+  
+}
+
+.content {
+  flex: 1; 
+  margin: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+
+span.logo {
+  display: flex;
+  padding: 6px 12px 20px 16px;
+  font-family: 'Poppins';
+  font-weight: 800;
   color: #528203;
   letter-spacing: 8px;
-  text-align:justify;
   width: 100%;
-
-  /* Prevent the h1 element from resizing and taking full width */
-  display: inline-block;
-  white-space: nowrap;
+  justify-content: center;
+  font-size: 2rem; 
 }
 
-#sidenav a {
-  padding: 15px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #528203;
-  font-family:'Poppins'; 
-}
-
-.sidebar li.active{
-  background: #528203;
-  border-radius: 8px;
-}
-
-.header {
+.list-unstyled.px-2 li {
+  margin-bottom: 10px;
   padding: 6px;
-  background: #67A600;
+  font-size: 1.2rem; 
 }
 
-.menu-item {
-  margin-bottom: 5px;
+h1.fs-4 {
+  font-size: 4rem; 
+}
+.user-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#user-info {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+}
+
+ #user-name{
+  font-family:"Poppins"
+
+}
+#user-info img {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%; /* To make the image circular, assuming it's a person's avatar */
+  margin-right: 10px; /* Add some space between the avatar and the username */
 }
