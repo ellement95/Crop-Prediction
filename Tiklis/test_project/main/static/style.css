@@ -86,6 +86,7 @@ h1.fs-2 {
 
 .content-container {
   padding: 74px;
+  text-align:justify;
 }
 
 .container-md {
@@ -129,5 +130,3 @@ h1.fs-2 {
 .menu-item:hover img {
   display: none;
 }
-
-.
