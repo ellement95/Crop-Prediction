@@ -30,31 +30,36 @@
     </header>
 
     <!-- Side bar -->
-    <div class="main-container">
-        <div class="sidebar" id="side_nav">
-     
-            <!-- Menu -->
-            <ul class="list-unstyled p-2">
+    <div class="container-fluid">
+        <div class="row">
+          <!-- Sidebar -->
+          <div class="col-md-2">
+            <div class="sidebar" id="side_nav">
+              <!-- Your sidebar content here -->
+              <ul class="list-unstyled p-2">
                 <li class="menu-item"><a href="#" class="text-decoration-none px-1 py-2 d-block"><img src="{% static 'icons/house-logo-16x16.png' %}">Price Predict</a></li>
                 <li class="menu-item"><a href="#" class="text-decoration-none px-1 py-2 d-block"><img src="{% static 'icons/house-logo-16x16.png' %}">Weather</a></li>
                 <li class="menu-item"><a href="#" class="text-decoration-none px-1 py-2 d-block"><img src="{% static 'icons/house-logo-16x16.png' %}">Crops</a></li>
-            </ul>
-        </div>
+              </ul>
+            </div>
+          </div>
 
         <!-- Content -->
-        <div class="content-container">
-            <div class="row justify-content-center">
-                <div class="content">
-                    {% block content %}{% endblock %}
+        <div class= "col-md-9">
+            <div class="content-container">
+                <div class="row justify-content-center">
+                    <div class="content">
+                        {% block content %}{% endblock %}
+                    </div>
                 </div>
+                
+                <!--Footer -->
+                <footer id="sticky-footer"class="footer mt-auto py-3 bg-light">
+                    <div class="container">
+                    <span class="text-muted"><small>Copyright &copy; <strong> Sahei Corporation </strong> 2023 </small></span>
+                    </div>
+                </footer>
             </div>
-            
-             <!--Footer -->
-            <footer id="sticky-footer"class="footer mt-auto py-3 bg-light">
-                <div class="container">
-                <span class="text-muted"><small>Copyright &copy; <strong> Sahei Corporation </strong> 2023 </small></span>
-                </div>
-            </footer>
         </div>
     </div>    
 
