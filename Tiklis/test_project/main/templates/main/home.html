@@ -5,12 +5,47 @@
 {% block title %}Tiklis Home{% endblock %}
 
 {% block content %}
-    <h1 class="display-3">Tiklis Management Information System</h1>
-    <hr></hr>
+<div class="container-flow">
+    <div>
+        <h1 class="display-3">Tiklis Management Information System</h1>
+        <hr>
+    </div>
     <div id="content">
         <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque lacus ex, fermentum a orci sed, condimentum fermentum nisi. Sed sed ligula sit amet nisl malesuada suscipit sed ullamcorper lorem. Integer lobortis, risus at volutpat aliquam, risus arcu lacinia purus, vel sagittis arcu ipsum eu est. Aliquam eu congue sem, in feugiat dui. Donec venenatis purus at velit placerat, nec euismod enim scelerisque. Proin vehicula velit dictum eros accumsan, suscipit vulputate erat tincidunt. Pellentesque varius lorem odio, et vehicula neque molestie sed. Nam pulvinar ex lectus, nec vehicula eros dictum eu. Cras mattis eleifend ex. Phasellus eu nisi interdum, faucibus neque et, aliquet augue. Quisque egestas lobortis tellus, id pellentesque lorem dictum sit amet. Proin tempor felis eget diam semper pretium. Nulla dictum tortor magna, eu vestibulum nisl ornare id.</p>
     </div>
     <div id="image">
         <img src="{% static 'tiklis-logo.jpg' %}" class="rounded mx-auto d-block" alt="tiklis-logo">
     </div>
+    <div>
+        <h1 class="display-3">About</h1>
+        <hr>
+            <div id="content">
+                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque lacus ex, fermentum a orci sed, condimentum fermentum nisi. Sed sed ligula sit amet nisl malesuada suscipit sed ullamcorper lorem. Integer lobortis, risus at volutpat aliquam, risus arcu lacinia purus, vel sagittis arcu ipsum eu est. Aliquam eu congue sem, in feugiat dui. Donec venenatis purus at velit placerat, nec euismod enim scelerisque. Proin vehicula velit dictum eros accumsan, suscipit vulputate erat tincidunt. Pellentesque varius lorem odio, et vehicula neque molestie sed. Nam pulvinar ex lectus, nec vehicula eros dictum eu. Cras mattis eleifend ex. Phasellus eu nisi interdum, faucibus neque et, aliquet augue. Quisque egestas lobortis tellus, id pellentesque lorem dictum sit amet. Proin tempor felis eget diam semper pretium. Nulla dictum tortor magna, eu vestibulum nisl ornare id.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque lacus ex, fermentum a orci sed, condimentum fermentum nisi. Sed sed ligula sit amet nisl malesuada suscipit sed ullamcorper lorem. Integer lobortis, risus at volutpat aliquam, risus arcu lacinia purus, vel sagittis arcu ipsum eu est. Aliquam eu congue sem, in feugiat dui. Donec venenatis purus at velit placerat, nec euismod enim scelerisque. Proin vehicula velit dictum eros accumsan, suscipit vulputate erat tincidunt. Pellentesque varius lorem odio, et vehicula neque molestie sed. Nam pulvinar ex lectus, nec vehicula eros dictum eu. Cras mattis eleifend ex. Phasellus eu nisi interdum, faucibus neque et, aliquet augue. Quisque egestas lobortis tellus, id pellentesque lorem dictum sit amet. Proin tempor felis eget diam semper pretium. Nulla dictum tortor magna, eu vestibulum nisl ornare id.
+                </p>
+            </div>
+            <!-- Added carousel-->
+            <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{% static 'placeholder.jpg' %}" class="d-block w-100 carousel-image" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'placeholder.jpg' %}" class="d-block w-100 carousel-image" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'placeholder.jpg' %}" class="d-block w-100 carousel-image" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+    </div>
+</div>
 {% endblock %}
