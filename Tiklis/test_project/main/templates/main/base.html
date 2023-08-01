@@ -17,7 +17,7 @@
     <header>
         <div class="horizontal-line">
                    <div class="header-box">
-                <h1 class="fs-2"><span class="logo">TIKLIS</span></h1> 
+                <h1 class="fs-2">  <a href="{% url 'home' %}" style="text-decoration: none;"><span class="logo">TIKLIS</a></span></h1> 
             </div>
             <div id="user-info">
                 <div id="user-avatar"> <img src ="{% static 'icons/avatar-empty.png' %}"></div>
@@ -37,9 +37,9 @@
             <div class="sidebar" id="side_nav">
               <!-- Your sidebar content here -->
               <ul class="list-unstyled p-2">
-                <li class="menu-item"><a href="#" class="text-decoration-none px-1 py-2 d-block"><img src="{% static 'icons/house-logo-16x16.png' %}">Price Predict</a></li>
-                <li class="menu-item"><a href="#" class="text-decoration-none px-1 py-2 d-block"><img src="{% static 'icons/house-logo-16x16.png' %}">Weather</a></li>
-                <li class="menu-item"><a href="#" class="text-decoration-none px-1 py-2 d-block"><img src="{% static 'icons/house-logo-16x16.png' %}">Crops</a></li>
+                <li class="menu-item"><a href="{% url 'predict' %}" class="text-decoration-none px-1 py-2 d-block"><img src="{% static 'icons/house-logo-16x16.png' %}">Price Predict</a></li>
+                <li class="menu-item"><a href="{% url 'weather' %}" class="text-decoration-none px-1 py-2 d-block"><img src="{% static 'icons/house-logo-16x16.png' %}">Weather</a></li>
+                <li class="menu-item"><a href="{% url 'crops' %}" class="text-decoration-none px-1 py-2 d-block"><img src="{% static 'icons/house-logo-16x16.png' %}">Crops</a></li>
               </ul>
             </div>
           </div>

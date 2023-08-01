@@ -50,16 +50,13 @@ span.logo {
   width: 100%;
   justify-content: left;
   font-size: 3rem;
+  text-decoration: none;
 }
 
 .list-unstyled.px-2 li {
   margin-bottom: 10px;
   padding: 6px;
   font-size: 1.2rem;
-}
-
-h1.fs-2 {
-  font-size: 2rem;
 }
 
 .user-container {
