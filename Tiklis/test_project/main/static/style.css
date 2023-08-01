@@ -179,3 +179,12 @@ span.logo {
   height: 100%;
 }
 
+.btn {
+  background-color: #5cad25;
+  font-family: "Helvetica";
+  font-weight: bold;
+}
+
+.btn:hover {
+  background-color: #528203 ;
+}
