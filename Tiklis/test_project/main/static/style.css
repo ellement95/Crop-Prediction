@@ -186,11 +186,20 @@ span.logo {
 .btn {
   background-color: #5cad25;
   font-family: "Poppins";
-  font-weight: bold;
   margin-top: 5px;
   border-radius: 25px;
 }
 
 .btn:hover {
   background-color: #528203 ;
+}
+
+.lead {
+  font-family: "Archivo";
+}
+
+h1.display-5,
+h1.display-3 {
+  font-family: "Poppins";
+
 }
