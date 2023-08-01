@@ -111,11 +111,13 @@ span.logo {
 .menu-item{
   margin: 0;
 }
-.menu-item img {
+.menu-item a img {
   width: 30px;
   height: 30px;
   margin-right: 8px;
+  fill: #528203;
 }
+
 .menu-item a {
   font-family: "Poppins";
   font-size: 22px;
