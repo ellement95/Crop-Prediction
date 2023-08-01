@@ -1,15 +1,20 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import ToDoList, Item
-from .forms import CreateNewList
+from .models import *
+from .forms import *
 
 # Create your views here.
 
 def home(response):
 	return render(response, "main/home.html", {})
 
-def predict(response):
-    return render(response,"main/predict.html",{})
+def predict(request):
+    if request.method == "POST":
+        file = request.FILES['file']
+        obj = File.objects.create(file=file)
+        
+  
+    return render(request,"main/predict.html",{})
 
 def weather(response):
     return render(response,"main/weather.html",{})

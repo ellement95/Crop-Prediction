@@ -126,16 +126,18 @@ span.logo {
   margin: 0px 0px 30px ;
   white-space: nowrap; 
 }
-.menu-item a:hover {
+.menu-item a:hover,
+.menu-item.active a {
   color: #ffffff; 
   text-decoration: none; 
   background: #5cad25;
-  border-radius: 7px;
+  border-radius: 10px;
   transition: background-color 0.35s;
   margin-left: 23px;
 }
 
-.menu-item:hover img {
+.menu-item:hover img,
+.menu-item.active img {
   display: none;
 }
 .logout {
@@ -183,8 +185,10 @@ span.logo {
 
 .btn {
   background-color: #5cad25;
-  font-family: "Helvetica";
+  font-family: "Poppins";
   font-weight: bold;
+  margin-top: 5px;
+  border-radius: 25px;
 }
 
 .btn:hover {

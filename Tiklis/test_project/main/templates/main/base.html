@@ -29,17 +29,16 @@
         </div>
     </header>
 
-    <!-- Side bar -->
+    <!-- Content and Sidebar -->
     <div class="container-fluid">
         <div class="row">
           <!-- Sidebar -->
           <div class="col-md-2">
             <div class="sidebar" id="side_nav">
-              <!-- Your sidebar content here -->
               <ul class="list-unstyled p-2">
-                <li class="menu-item"><a href="{% url 'predict' %}" class="text-decoration-none px-1 py-2 d-block"><img src="{% static 'icons/arrow-trend-up-solid.svg' %}">Price Predict</a></li>
-                <li class="menu-item"><a href="{% url 'weather' %}" class="text-decoration-none px-1 py-2 d-block"><img src="{% static 'icons/cloud-fill.svg' %}">Weather</a></li>
-                <li class="menu-item"><a href="{% url 'crops' %}" class="text-decoration-none px-1 py-2 d-block"><img src="{% static 'icons/leaf-solid.svg' %}">Crops</a></li>
+                <li class="menu-item"><a class="nav-link" href="{% url 'predict' %}" class="text-decoration-none px-1 py-2 d-block"><img src="{% static 'icons/arrow-trend-up-solid.svg' %}">Price Predict</a></li>
+                <li class="menu-item"><a class="nav-link" href="{% url 'weather' %}" class="text-decoration-none px-1 py-2 d-block"><img src="{% static 'icons/cloud-fill.svg' %}">Weather</a></li>
+                <li class="menu-item"><a class="nav-link" href="{% url 'crops' %}" class="text-decoration-none px-1 py-2 d-block"><img src="{% static 'icons/leaf-solid.svg' %}">Crops</a></li>
               </ul>
             </div>
           </div>
@@ -63,9 +62,28 @@
         </div>
     </div>    
 
-   
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const menuItems = document.querySelectorAll(".menu-item");
+      
+          function setActiveMenuItem() {
+            menuItems.forEach((item) => {
+              if (item.querySelector("a").href === window.location.href) {
+                item.classList.add("active");
+              } else {
+                item.classList.remove("active");
+              }
+            });
+          }
+      
+          setActiveMenuItem();
+      
+          // Check for window focus/blur events to update active menu item dynamically
+          window.addEventListener("focus", setActiveMenuItem);
+          window.addEventListener("blur", setActiveMenuItem);
+        });
+      </script>
 </main>
 </body>
 </html>
