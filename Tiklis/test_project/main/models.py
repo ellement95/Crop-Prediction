@@ -14,3 +14,7 @@ class Item(models.Model):
 
 	def __str__(self):
 		return self.text
+
+class File(models.Model):
+    file = models.FileField(upload_to='files/')
+    # Add any additional fields you need for the File model

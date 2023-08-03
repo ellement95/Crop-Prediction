@@ -23,10 +23,39 @@ body, html {
   overflow-y: auto;
   overflow-x: hidden;
   margin-top: 120px;
- position: fixed;
+ position: absolute;
   
 }
+.burger-icon {
+  display: none;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+ 
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  margin-top: 100px;
+}
 
+/* Show burger icon on smaller screens */
+@media screen and (max-width: 1366px) {
+  .burger-icon {
+    display: inline-block;
+  }
+
+  /* Hide menu items initially on smaller screens */
+  .sidebar ul {
+    display: none;
+  }
+  
+  /* Show menu items when burger icon is clicked */
+  .sidebar ul.show {
+    display: block;
+    border: 2px solid #549d22;
+    border-radius: 10px;
+    
+  }
+}
 .horizontal-line {
   overflow: hidden;
   background-color: #5cad25;
@@ -35,7 +64,6 @@ body, html {
   position: fixed;
   top: 0;
   left: 0;
-
   box-shadow: inset -35px -35px 70px #549d22,
   inset 35px 35px 70px #64bd28;
 }

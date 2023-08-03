@@ -10,11 +10,19 @@ def home(response):
 
 def predict(request):
     if request.method == "POST":
-        file = request.FILES['file']
-        obj = File.objects.create(file=file)
-        
-  
-    return render(request,"main/predict.html",{})
+        form = FileUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Save the uploaded file to the database using the File model
+            file = form.cleaned_data['file']
+            obj = File.objects.create(file=file)
+            # Additional processing or computations can be performed here
+            # For example, you can pass the 'obj' or its ID to the template
+            # to display or manipulate it as needed
+            return render(request, "main/prediction_result.html", {'file_obj': obj})
+    else:
+        form = FileUploadForm()
+
+    return render(request, "main/predict.html", {'form': form})
 
 def weather(response):
     return render(response,"main/weather.html",{})
