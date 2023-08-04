@@ -18,3 +18,10 @@ class Item(models.Model):
 class File(models.Model):
     file = models.FileField(upload_to='files/')
     # Add any additional fields you need for the File model
+
+class CropData(models.Model):
+    crop_name = models.CharField(max_length=100)
+    yield_value = models.FloatField()
+    high_price = models.FloatField()
+    low_price = models.FloatField()
+    date = models.DateField()
