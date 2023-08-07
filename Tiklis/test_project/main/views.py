@@ -3,10 +3,34 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .models import *
 from .forms import *
 
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
 # Create your views here.
 
 def home(response):
 	return render(response, "main/home.html", {})
+
+def preprocess_data(df):
+    # 1. Data Cleaning
+    # Handle missing data (you can choose an appropriate imputation method):
+    #df.fillna(df.mean(), inplace=True)
+
+    # 2. Feature Selection/Extraction
+    selected_features = df[["DATE", "PRICE (LOW)", "PRICE (HIGH)"]]
+
+    # 3. Feature Scaling/Normalization
+    # Scale the numerical features using StandardScaler:
+    scaler = StandardScaler()
+    selected_features = scaler.fit_transform(selected_features)
+
+    # 4. Splitting the Data
+    # Assuming you have a target variable 'target_column' in your DataFrame:
+    target = df['target_column']
+    X_train, X_test, y_train, y_test = train_test_split(selected_features, target, test_size=0.2, random_state=42)
+
+    return X_train, X_test, y_train, y_test
 
 def predict(request):
     if request.method == "POST":
@@ -18,6 +42,16 @@ def predict(request):
             # Additional processing or computations can be performed here
             # For example, you can pass the 'obj' or its ID to the template
             # to display or manipulate it as needed
+            
+            # Read the data from the file into a DataFrame
+            df = pd.read_csv(file)
+
+            # Data preprocessing
+            X_train, X_test, y_train, y_test = preprocess_data(df)
+            
+            # Perform regression analysis here
+            # Train the regression model and make predictions
+            
             return render(request, "main/prediction_result.html", {'file_obj': obj})
     else:
         form = FileUploadForm()
