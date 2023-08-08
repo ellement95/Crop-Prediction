@@ -74,7 +74,8 @@ def weather(response):
     return render(response,"main/weather.html",{})
 
 def crops(response):
-    return render(response,"main/crops.html",{})
+    crop = CropData.objects.all().order_by('date')[:10]
+    return render(response, "main/crops.html", {'crop': crop})
             
 
 def test(request):

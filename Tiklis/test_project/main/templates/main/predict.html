@@ -17,21 +17,8 @@
                 <input type="file" name="upload" accept=" .csv">
                 <br>
                 <button class="btn btn-primary" type="submit">Submit</button>
-        </form>
-  
-            <h1 class="display-5">Check content:</h1>
-                <hr>
-                <div class="row">
-                    <div id="content">
-                    {% if uploaded_file_url %}
-                    <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
-                      <p>Uploaded to:<a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
-                      <a class="btn btn-dark my-4" href="/">Return to Homepage</a>
-                    {% else %}
-                    <p>No file added.</p>
-                    {% endif %}
-                  </div>
-                </div>
+        </form>    
+     </div>
         
 </div>
 {% endblock %}
