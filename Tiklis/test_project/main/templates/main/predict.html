@@ -12,19 +12,26 @@
         <p class ="lead"> Upload the CSV below by clicking the upload button. 
             Ensure the CSV file is well-structured and contains the relevant data in columns and rows to avoid any errors during the upload process.</p>
     </div>
-    <form action="{% url "predict" %}" method="POST" enctype="multipart/form-data" class="form-horizontal"> 
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="name" class="col-md-3 col-sm-3 col-xs-12 control-label">File: </label>
-            <div class="col-md-8">
-                <input type="file" name="csv_file" id="csv_file" required="True" class="form-control">
-            </div>                    
-        </div>
-        <div class="form-group">                    
-            <div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3" style="margin-bottom:10px;">
-                 <button class="btn btn-primary"><img src="{% static 'icons/arrow-up-circle.svg' %}"> </img><span class="upload" style="margin-right:5px;"></span>Upload </button>
-            </div> 
-        </div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+                <input type="file" name="upload" accept=" .csv">
+                <br>
+                <button class="btn btn-primary" type="submit">Submit</button>
         </form>
+  
+            <h1 class="display-5">Check content:</h1>
+                <hr>
+                <div class="row">
+                    <div id="content">
+                    {% if uploaded_file_url %}
+                    <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
+                      <p>Uploaded to:<a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
+                      <a class="btn btn-dark my-4" href="/">Return to Homepage</a>
+                    {% else %}
+                    <p>No file added.</p>
+                    {% endif %}
+                  </div>
+                </div>
+        
 </div>
 {% endblock %}

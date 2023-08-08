@@ -1,3 +1,4 @@
+import csv
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import *
@@ -34,28 +35,30 @@ def preprocess_data(df):
 
 def predict(request):
     if request.method == "POST":
-        form = FileUploadForm(request.POST, request.FILES)
+        form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            # Save the uploaded file to the database using the File model
-            file = form.cleaned_data['file']
-            obj = File.objects.create(file=file)
-            # Additional processing or computations can be performed here
-            # For example, you can pass the 'obj' or its ID to the template
-            # to display or manipulate it as needed
+            uploaded_file = form.cleaned_data['upload']
             
-            # Read the data from the file into a DataFrame
-            df = pd.read_csv(file)
+            file = uploaded_file.read().decode('utf-8')
+            csv_reader = csv.reader(file.splitlines(), delimiter=',')
+            next(csv_reader)
 
-            # Data preprocessing
-            X_train, X_test, y_train, y_test = preprocess_data(df)
-            
-            # Perform regression analysis here
-            # Train the regression model and make predictions
-            
-            return render(request, "main/prediction_result.html", {'file_obj': obj})
+            for row in csv_reader:
+                 time_variable = row[8].strip()
+                 CropData.objects.create(
+                      date=row[0],
+                      commodity=row[1],
+                      variety=row[2],
+                      classification=row[3],
+                      category=row[4],
+                      high_price=row[5],
+                      low_price=row[6],
+                      yield_value=row[7],
+                      time_variable=time_variable
+                 )
+            return render(request, 'upload_success.html')
     else:
-        form = FileUploadForm()
-
+        form = UploadFileForm()
     return render(request, "main/predict.html", {'form': form})
 
 def weather(response):
@@ -64,19 +67,6 @@ def weather(response):
 def crops(response):
     return render(response,"main/crops.html",{})
             
-def create(response):
-	if response.method == "POST":
-		form = CreateNewList(response.POST)
-
-		if form.is_valid():
-			n = form.cleaned_data["name"]
-			t = ToDoList(name=n)
-			t.save()
-
-		return HttpResponseRedirect("/%i" %t.id)
-	else:
-		form = CreateNewList()
-	return render(response, "main/create.html", {"form":form})
 
 def test(request):
 	return render(request,'main/test.html')

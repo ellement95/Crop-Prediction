@@ -1,5 +1,5 @@
+# forms.py
 from django import forms
 
-class FileUploadForm(forms.Form):
-    name = forms.CharField(label="Name", max_length=200)
-    check = forms.BooleanField(required = False)
+class UploadFileForm(forms.Form):
+    upload = forms.FileField(label='Select a file', help_text='Allowed formats: .csv')
