@@ -44,18 +44,21 @@ def predict(request):
             next(csv_reader)
 
             for row in csv_reader:
-                 time_variable = row[8].strip()
-                 CropData.objects.create(
-                      date=row[0],
-                      commodity=row[1],
-                      variety=row[2],
-                      classification=row[3],
-                      category=row[4],
-                      high_price=row[5],
-                      low_price=row[6],
-                      yield_value=row[7],
-                      time_variable=time_variable
-                 )
+                 if len(row) >= 9:
+                    time_variable = row[8].strip()
+                    CropData.objects.create(
+                        date=row[0],
+                        commodity=row[1],
+                        variety=row[2],
+                        classification=row[3],
+                        category=row[4],
+                        high_price=row[5],
+                        low_price=row[6],
+                        yield_value=row[7],
+                        time_variable=time_variable
+                    )
+                 else:
+                    print("something wrong", row)
             return render(request, 'upload_success.html')
     else:
         form = UploadFileForm()
