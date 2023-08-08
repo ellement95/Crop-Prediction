@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import *
 from .forms import *
-
+from django.core.paginator import Paginator , EmptyPage, PageNotAnInteger
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -73,9 +73,18 @@ def predict(request):
 def weather(response):
     return render(response,"main/weather.html",{})
 
-def crops(response):
-    crop = CropData.objects.all().order_by('date')[:10]
-    return render(response, "main/crops.html", {'crop': crop})
+def crops(request):
+    crop = CropData.objects.all().order_by('date')
+    page = request.GET.get('page',1)
+
+    paginator = Paginator(crop,10)
+    try:
+         crop = paginator.page(page)
+    except PageNotAnInteger:
+         crop = paginator.page(1)
+    except EmptyPage:
+         crop = paginator.page(paginator.num_pages)
+    return render(request, "main/crops.html", {'crop': crop})
             
 
 def test(request):

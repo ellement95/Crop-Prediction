@@ -4,7 +4,7 @@
 {% block title %}Crops {% endblock %}
 {% block content %}
 <div class="container-flow">
-    <h1 class="display-5">Crops and Produce Available: </h1>
+    <h1 class="display-5">Crops and Produce Available:</h1>
     <button class="btn btn-primary" type="submit">View Graphs</button>
     <hr>
     <div id="content">
@@ -25,20 +25,42 @@
                 </tr>
             </thead>
             <tbody>  
-                {% for crop in crop %}
+                {% for crop in crop %} {# Use "crops" as the loop variable, assuming that's the name you're using in the context #}
                 <tr class="align-middle">
                     <td>{{ crop.date }}</td>
                     <td>{{ crop.commodity }}</td>
                     <td>{{ crop.variety }}</td>
                     <td>{{ crop.classification }}</td>
                     <td>{{ crop.category }}</td>
-                    <td>{{ crop.high_price }}</td>
-                    <td>{{ crop.low_price }}</td>
+                    <td>{{ crop.low_price }}</td> {# Corrected the order of "Low Price" and "High Price" #}
+                    <td>{{ crop.high_price }}</td> {# Corrected the order of "Low Price" and "High Price" #}
                     <td>{{ crop.time_variable }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+
+        {% if crops.has_other_pages %}
+        <ul class="pagination">
+            {% if crops.has_previous %}
+                <li><a href="?page={{ crops.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+            {% endif %}
+            {% for i in crops.paginator.page_range %}
+                {% if crops.number == i %}
+                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                <li><a href="?page={{ i }}">{{ i }}</a></li>
+             {% endif %}
+            {% endfor %}
+            {% if crops.has_next %}
+             <li><a href="?page={{ crops.next_page_number }}">&raquo;</a></li>
+            {% else %}
+             <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+        </ul>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
