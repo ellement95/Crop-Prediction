@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container-flow">
     <h1 class="display-5">Crops and Produce Available:</h1>
-    <button class="btn btn-primary" type="submit">View Graphs</button>
+    <button class="btn btn-primary"> <a href="{% url 'graphs' %}">View Graphs</a></button> 
     <hr>
     <div id="content">
         <p class="lead">Crops available for price prediction.</p>

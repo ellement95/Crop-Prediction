@@ -73,6 +73,8 @@ def predict(request):
 def weather(response):
     return render(response,"main/weather.html",{})
 
+def graphs(response):
+    return render(response,"main/graphs.html",{})
 def crops(request):
     crop = CropData.objects.all().order_by('date')
     page = request.GET.get('page',1)
