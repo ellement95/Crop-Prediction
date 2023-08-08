@@ -7,11 +7,14 @@ class File(models.Model):
 
 class CropData(models.Model):
     date = models.DateField()
-    commodity = models.CharField(max_length=100,default='Unknown')
+    commodity = models.CharField(max_length=100, default='Unknown')
     variety = models.CharField(max_length=100)
     classification = models.CharField(max_length=100, default='Crop')
     category = models.CharField(max_length=100, default='Default Category')
     high_price = models.FloatField()
     low_price = models.FloatField()
-    yield_value = models.FloatField()
     time_variable = models.TimeField()
+    
+    def __str__(self):
+        return f"{self.date} - {self.commodity} - {self.variety}"
+
