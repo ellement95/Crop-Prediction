@@ -12,7 +12,7 @@ from sklearn.linear_model import LinearRegression
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error, mean_absolute_error
-
+from datetime import datetime 
 # Create your views here.
 
 def home(response):
@@ -69,7 +69,13 @@ def predict(request):
             next(csv_reader)
 
             for row in csv_reader:
-                date = row[0]
+                date_string = row[0]
+                try: 
+                    date = datetime.strptime(date_string, '%m/%d/%Y').date()
+                except ValueError:
+                    print(f"Invalid date format on: {date_string}")
+                    continue
+                
                 commodity = row[1]
                 variety = row[2]
                 classification = row[3]
