@@ -6,9 +6,7 @@ from .forms import *
 from django.core.paginator import Paginator , EmptyPage, PageNotAnInteger
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
-from sklearn.linear_model import LinearRegression
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error, mean_absolute_error
@@ -56,15 +54,27 @@ def predict(request):
                     )
                 else:
                     print("something wrong", row)
+                    
+            # # Use the CropPricePrediction class to predict price categories
+            # crop_price_predictor = CropPricePrediction()
+            # X_train, X_test, y_train, y_test = crop_price_predictor.preprocess_data(CropData.objects.all())
+            # model, accuracy = crop_price_predictor.train_and_predict(X_train, X_test, y_train)
 
-            # Preprocess the DataFrame
-            df = pd.DataFrame.from_records(CropData.objects.all().values())
-            X_train, X_test, X_unseen, y_min_train, y_min_test, y_max_train, y_max_test, y_unseen = CropPricePrediction.preprocess_data(df)
+            # # Process user inputs
+            # user_input = {
+            #     'date': request.POST['date'],  # Extract from your form fields
+            #     'commodity': request.POST['commodity'],
+            #     'classification': request.POST['classification'],
+            #     'category': request.POST['category'],
+            #     'time_variable': request.POST['time_variable']
+            # }
             
-            # Train and predict using the model's method
-            mse_min, mse_max = CropPricePrediction.train_and_predict(X_train, X_test, X_unseen, y_min_train, y_max_train, y_min_test)
-
-            return render(request, 'main/upload_success.html', {'mse_min': mse_min, 'mse_max': mse_max})
+            # # Get formatted user input data
+            # input_data = crop_price_predictor.get_user_input_data(user_input)
+            
+            # predicted_category = crop_price_predictor.predict_price_category([input_data], model, accuracy)
+            
+            return render(request, 'main/upload_success.html', {})
     else:
         form = UploadFileForm()
     return render(request, "main/predict.html", {'form': form})
@@ -74,6 +84,7 @@ def weather(response):
 
 def graphs(response):
     return render(response,"main/graphs.html",{})
+
 def crops(request):
     crop = CropData.objects.all().order_by('date')
     page = request.GET.get('page',1)
