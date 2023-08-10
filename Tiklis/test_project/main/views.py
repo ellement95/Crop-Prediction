@@ -55,25 +55,6 @@ def predict(request):
                 else:
                     print("something wrong", row)
                     
-            # # Use the CropPricePrediction class to predict price categories
-            # crop_price_predictor = CropPricePrediction()
-            # X_train, X_test, y_train, y_test = crop_price_predictor.preprocess_data(CropData.objects.all())
-            # model, accuracy = crop_price_predictor.train_and_predict(X_train, X_test, y_train)
-
-            # # Process user inputs
-            # user_input = {
-            #     'date': request.POST['date'],  # Extract from your form fields
-            #     'commodity': request.POST['commodity'],
-            #     'classification': request.POST['classification'],
-            #     'category': request.POST['category'],
-            #     'time_variable': request.POST['time_variable']
-            # }
-            
-            # # Get formatted user input data
-            # input_data = crop_price_predictor.get_user_input_data(user_input)
-            
-            # predicted_category = crop_price_predictor.predict_price_category([input_data], model, accuracy)
-            
             return render(request, 'main/upload_success.html', {})
     else:
         form = UploadFileForm()
