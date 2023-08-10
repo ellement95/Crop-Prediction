@@ -45,7 +45,7 @@ def predict(request):
                 time_variable = row[7].strip()
                 if len(row) >= 8:
                     CropData.objects.create(
-                        date=date,
+                        date=date_string,
                         commodity=commodity,
                         variety=variety,
                         classification=classification,
@@ -63,8 +63,8 @@ def predict(request):
             
             # Train and predict using the model's method
             mse_min, mse_max = CropPricePrediction.train_and_predict(X_train, X_test, X_unseen, y_min_train, y_max_train, y_min_test)
-            
-            return render(request, 'main/upload_success.html')
+
+            return render(request, 'main/upload_success.html', {'mse_min': mse_min, 'mse_max': mse_max})
     else:
         form = UploadFileForm()
     return render(request, "main/predict.html", {'form': form})

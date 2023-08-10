@@ -1,5 +1,6 @@
 from django.db import models
 
+import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
@@ -7,6 +8,7 @@ from sklearn.linear_model import LinearRegression
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error, mean_absolute_error
+from datetime import datetime 
 
 # Create your models here.
 
@@ -30,17 +32,15 @@ class CropPricePrediction(models.Model):
     @staticmethod
     def preprocess_data(df):
         # Extract relevant features from the timestamp columns
-        df['YEAR'] = df['DATE'].dt.year
-        df['MONTH'] = df['DATE'].dt.month
-        df['DAY'] = df['DATE'].dt.day
-
-        # Extract relevant features from the parsed time components
-        df['HOUR'] = df['TIME'].apply(lambda x: x.hour)
-        df['MINUTE'] = df['TIME'].apply(lambda x: x.minute)
-        df['SECOND'] = df['TIME'].apply(lambda x: x.second)
+        df['YEAR'] = df['date'].dt.year
+        df['MONTH'] = df['date'].dt.month
+        df['DAY'] = df['date'].dt.day
+        df['HOUR'] = df['time_variable'].apply(lambda x: x.hour)
+        df['MINUTE'] = df['time_variable'].apply(lambda x: x.minute)
+        df['SECOND'] = df['time_variable'].apply(lambda x: x.second)
 
         # Select categorical columns for one-hot encoding
-        categorical_columns = ['COMMODITY', 'CLASSIFICATION', 'CATEGORY']
+        categorical_columns = ['commodity', 'classification', 'category']
 
         # Apply one-hot encoding to categorical columns
         encoder = OneHotEncoder(drop='first', sparse=False)
@@ -49,16 +49,11 @@ class CropPricePrediction(models.Model):
         # Create a DataFrame for encoded categorical features
         encoded_df = pd.DataFrame(encoded_categorical, columns=encoder.get_feature_names_out(input_features=categorical_columns))
 
-        # Split the data into features and targets
-
         # Combine encoded categorical features with numerical features
         X = pd.concat([df[['YEAR', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'SECOND']], encoded_df], axis=1)
 
-        y_min = df['MIN PRICE']  # Target: Minimum Price
-        y_max = df['MAX PRICE']  # Target: Maximum Price
-
-        # Split the data into training and testing sets
-        X_train, X_test, y_min_train, y_min_test, y_max_train, y_max_test = train_test_split(X, y_min, y_max, test_size=0.2, random_state=42)
+        y_min = df['low_price']  # Target: Minimum Price
+        y_max = df['high_price']  # Target: Maximum Price
 
         # Split the data into training and testing sets
         X_train, X_test, y_min_train, y_min_test, y_max_train, y_max_test = train_test_split(X, y_min, y_max, test_size=0.2, random_state=42)
@@ -66,10 +61,10 @@ class CropPricePrediction(models.Model):
         # Split the testing data into validation and unseen test sets
         X_test, X_unseen, y_test, y_unseen = train_test_split(X_test, y_min_test, test_size=0.33, random_state=42)
 
-        return X_train, X_test, X_unseen, y_min_train, y_min_test, y_max_train, y_max_test, y_unseen
+        return X_train, X_test, X_unseen, y_min_train, y_max_train, y_test, y_unseen
 
     @staticmethod
-    def train_and_predict(X_train, X_test, X_unseen, y_min_train, y_max_train, y_min_test):
+    def train_and_predict(X_train, X_test, X_unseen, y_min_train, y_max_train, y_test):
         # Initialize StandardScaler
         scaler = StandardScaler()
 
@@ -91,7 +86,7 @@ class CropPricePrediction(models.Model):
         y_max_pred = model_max.predict(X_test_scaled)
 
         # Evaluate the models using Mean Squared Error
-        mse_min = mean_squared_error(y_min_test, y_min_pred)
-        mse_max = mean_squared_error(y_max_test, y_max_pred)
+        mse_min = mean_squared_error(y_test, y_min_pred)
+        mse_max = mean_squared_error(y_test, y_max_pred)
 
         return mse_min, mse_max
