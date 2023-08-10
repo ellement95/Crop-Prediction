@@ -7,6 +7,11 @@ from django.core.paginator import Paginator , EmptyPage, PageNotAnInteger
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.linear_model import LinearRegression
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.metrics import mean_squared_error, mean_absolute_error
 
 # Create your views here.
 
@@ -14,24 +19,44 @@ def home(response):
 	return render(response, "main/home.html", {})
 
 def preprocess_data(df):
-    # 1. Data Cleaning
-    # Handle missing data (you can choose an appropriate imputation method):
-    #df.fillna(df.mean(), inplace=True)
+    # Extract relevant features from the timestamp columns
+    df['YEAR'] = df['DATE'].dt.year
+    df['MONTH'] = df['DATE'].dt.month
+    df['DAY'] = df['DATE'].dt.day
 
-    # 2. Feature Selection/Extraction
-    selected_features = df[["DATE", "PRICE (LOW)", "PRICE (HIGH)"]]
+    # Extract relevant features from the parsed time components
+    df['HOUR'] = df['TIME'].apply(lambda x: x.hour)
+    df['MINUTE'] = df['TIME'].apply(lambda x: x.minute)
+    df['SECOND'] = df['TIME'].apply(lambda x: x.second)
+        
+    # Select categorical columns for one-hot encoding
+    categorical_columns = ['COMMODITY', 'CLASSIFICATION', 'CATEGORY']
 
-    # 3. Feature Scaling/Normalization
-    # Scale the numerical features using StandardScaler:
-    scaler = StandardScaler()
-    selected_features = scaler.fit_transform(selected_features)
+    # Apply one-hot encoding to categorical columns
+    encoder = OneHotEncoder(drop='first', sparse=False)
+    encoded_categorical = encoder.fit_transform(df[categorical_columns])
 
-    # 4. Splitting the Data
-    # Assuming you have a target variable 'target_column' in your DataFrame:
-    target = df['target_column']
-    X_train, X_test, y_train, y_test = train_test_split(selected_features, target, test_size=0.2, random_state=42)
+    # Create a DataFrame for encoded categorical features
+    encoded_df = pd.DataFrame(encoded_categorical, columns=encoder.get_feature_names_out(input_features=categorical_columns))
+    
+    # Split the data into features and targets
 
-    return X_train, X_test, y_train, y_test
+    # Combine encoded categorical features with numerical features
+    X = pd.concat([df[['YEAR', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'SECOND']], encoded_df], axis=1)
+
+    y_min = df['MIN PRICE']  # Target: Minimum Price
+    y_max = df['MAX PRICE']  # Target: Maximum Price
+
+    # Split the data into training and testing sets
+    X_train, X_test, y_min_train, y_min_test, y_max_train, y_max_test = train_test_split(X, y_min, y_max, test_size=0.2, random_state=42)
+
+    # Split the data into training and testing sets
+    X_train, X_test, y_min_train, y_min_test, y_max_train, y_max_test = train_test_split(X, y_min, y_max, test_size=0.2, random_state=42)
+
+    # Split the testing data into validation and unseen test sets
+    X_test, X_unseen, y_test, y_unseen = train_test_split(X_test, y_min_test, test_size=0.33, random_state=42)
+
+    return X_train, X_test, X_unseen, y_min_train, y_min_test, y_max_train, y_max_test, y_unseen
 
 def predict(request):
     if request.method == "POST":
@@ -65,6 +90,20 @@ def predict(request):
                     )
                 else:
                     print("something wrong", row)
+            
+            # Preprocess the DataFrame
+            X_train, X_test, X_unseen, y_min_train, y_min_test, y_max_train, y_max_test, y_unseen = preprocess_data(df)
+            
+            # Initialize StandardScaler
+            scaler = StandardScaler()
+
+            # Fit scaler on training data and transform all the splits
+            X_train_scaled = scaler.fit_transform(X_train)
+            X_test_scaled = scaler.transform(X_test)
+            X_unseen_scaled = scaler.transform(X_unseen)
+            
+            # Linear Regression
+    
             return render(request, 'main/upload_success.html')
     else:
         form = UploadFileForm()
