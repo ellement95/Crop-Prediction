@@ -32,15 +32,15 @@ def predict(request):
                     date = datetime.strptime(date_string, '%Y-%m-%d').date()
                     
                     # Extract year, month, and day from the components
-                    year = date.year
-                    month = date.month
-                    day = date.day
-                    
+                    year = int(date_string[0])
+                    month = int(date_string[1])
+                    day = int(date_string[2])
+
                     try: 
-                        # Check if the month is within the valid range
+                    # Check if the month is within the valid range
                         if month >= 1 and month <= 12:
                             # Create a datetime.date object
-                            date_string = date
+                            date_string = datetime(year, month, day).date()
                     except ValueError:
                         print(f"Invalid month value on: {date_string}")
                 except ValueError:
