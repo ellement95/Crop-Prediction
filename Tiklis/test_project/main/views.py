@@ -30,17 +30,44 @@ def predict(request):
                 date_string = row[0]
                 try: 
                     date = datetime.strptime(date_string, '%Y-%m-%d').date()
+                    
+                    # Extract year, month, and day from the components
+                    year = int(date_string[0])
+                    month = int(date_string[1])
+                    day = int(date_string[2])
+                    
+                    try: 
+                    # Check if the month is within the valid range
+                        if month >= 1 or month <= 12:
+                            # Create a datetime.date object
+                            date_string = datetime(year, month, day).date()
+                    except ValueError:
+                        print(f"Invalid month value on: {date_string}")
                 except ValueError:
                     print(f"Invalid date format on: {date_string}")
                     continue
                 
-                commodity = row[1]
-                variety = row[2]
-                classification = row[3]
-                category = row[4]
-                low_price = float(row[5])
-                high_price = float(row[6])
-                time_variable = row[7].strip()
+                commodity = row[3]
+                variety = row[4]
+                classification = row[5]
+                category = row[6]
+                low_price = float(row[7])
+                high_price = float(row[8])
+                time_variable = row[9]
+                try: 
+                    time = datetime.strptime(time_variable, '%H:%M:%S').time()
+                    
+                    # Extract hour, minute, and second from the time_variable string
+                    hour = int(time_variable.split(':')[0])
+                    minute = int(time_variable.split(':')[1])
+                    second = int(time_variable.split(':')[2])
+
+                    # Create a datetime.time object
+                    time_obj = datetime.time(hour, minute, second)
+                except ValueError:
+                    print(f"Invalid time format on: {time_variable}")
+                    continue
+                
                 if len(row) >= 8:
                     CropData.objects.create(
                         date=date_string,
