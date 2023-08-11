@@ -1,0 +1,22 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %} Price Prediction Results{% endblock %}
+
+{% block content %} 
+<div class="container-flow">
+    <div>
+        <h1 class="display-5">Predicted Prices</h1>
+        <hr>
+    </div>
+    <div id="content">
+        <p class="lead">Prediction Results:</p>
+        <p>Commodity: {{ commodity }}</p>
+        <p>Variety: {{ variety }}</p>
+        <p>Classification: {{ classification }}</p>
+        <p>Category: {{ category }}</p>
+        <p>Date: {{ date }}</p>
+        <p>Time: {{ time }}</p>
+        <p>Predicted MIN PRICE: {{ predicted_min_price }}</p>
+        <p>Predicted MAX PRICE: {{ predicted_max_price }}</p>
+    </div>
+</div>
