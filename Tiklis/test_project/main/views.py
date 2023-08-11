@@ -29,7 +29,7 @@ def predict(request):
             for row in csv_reader:
                 date_string = row[0]
                 try: 
-                    date = datetime.strptime(date_string, '%m/%d/%Y').date()
+                    date = datetime.strptime(date_string, '%Y-%m-%d').date()
                 except ValueError:
                     print(f"Invalid date format on: {date_string}")
                     continue
@@ -55,7 +55,28 @@ def predict(request):
                 else:
                     print("something wrong", row)
                     
-            return render(request, 'main/upload_success.html', {})
+            else:  # User input form submission
+                form = UserInputForm(request.POST)
+                if form.is_valid():
+                    # Collect user inputs from the form
+                    user_input = form.cleaned_data
+
+                    # Process the uploaded CSV file
+                    if 'upload' in request.FILES:
+                        uploaded_file = request.FILES['upload']
+                        df = pd.read_csv(uploaded_file)
+                        df = CropPricePrediction.convert_date_and_time(df)
+
+                        # Make predictions based on user input
+                        predicted_min_price, predicted_max_price = CropPricePrediction.predict_price(user_input, df)
+                        
+                        # Render the results
+                        return render(request, 'main/prediction_results.html', {
+                            'predicted_min_price': predicted_min_price,
+                            'predicted_max_price': predicted_max_price,
+                            'user_input': user_input,
+                        })
+
     else:
         form = UploadFileForm()
     return render(request, "main/predict.html", {'form': form})
