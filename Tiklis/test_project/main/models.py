@@ -28,7 +28,6 @@ class CropData(models.Model):
         return f"{self.date} - {self.commodity} - {self.variety}"
 
 class CropPricePrediction(models.Model):
-    @staticmethod
     def convert_date_and_time(df):
         # Convert 'DATE' column to datetime
         df['DATE'] = pd.to_datetime(df['DATE'])
@@ -51,11 +50,19 @@ class CropPricePrediction(models.Model):
 
         # Drop the original 'TIME' column if not needed
         df.drop('TIME', axis=1, inplace=True)
-        
+
         return df
     
     @staticmethod
-    def prediction_model(df):
+    def prediction_model(row):
+        # Convert the list into a DataFrame
+        column_names = ['DATE', 'COMMODITY', 'VARIETY', 'CLASSIFICATION', 'CATEGORY', 'MIN PRICE', 'MAX PRICE', 'TIME']
+        data = [row]
+        df = pd.DataFrame(data, columns=column_names)
+        
+        # Apply the convert_date_and_time function
+        df = CropPricePrediction.convert_date_and_time(df)
+
         # Prepare data
         X = df.drop(['MIN PRICE', 'MAX PRICE'], axis=1)  # Features
         y_min = df['MIN PRICE']  # Target variable: MIN PRICE
@@ -68,18 +75,12 @@ class CropPricePrediction(models.Model):
             X[col] = le.fit_transform(X[col])
             label_encoders[col] = le
 
-        # Split data into training and testing sets
-        X_train, X_test, y_min_train, y_min_test, y_max_train, y_max_test = train_test_split(
-            X, y_min, y_max, test_size=0.2, random_state=42
-        )
-        
-        # Create a Random Forest Regressor model for MIN PRICE
+        # Create Random Forest Regressor models for MIN PRICE and MAX PRICE
         rf_min = RandomForestRegressor(n_estimators=100, random_state=42)
-        rf_min.fit(X_train, y_min_train)
+        rf_min.fit(X, y_min)
 
-        # Create a Random Forest Regressor model for MAX PRICE
         rf_max = RandomForestRegressor(n_estimators=100, random_state=42)
-        rf_max.fit(X_train, y_max_train)
+        rf_max.fit(X, y_max)
         
         return rf_min, rf_max
         

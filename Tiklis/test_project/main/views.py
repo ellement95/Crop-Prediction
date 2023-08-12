@@ -78,30 +78,24 @@ def predict(request):
                         high_price=high_price,
                         time_variable=time_variable
                     )
-                else:
-                    print("something wrong", row)
                     
-            else:  # User input form submission
-                form = UserInputForm(request.POST)
-                if form.is_valid():
-                    # Collect user inputs from the form
-                    user_input = form.cleaned_data
+                    # Call the prediction_model function to get the trained models
+                    rf_min, rf_max = CropPricePrediction.prediction_model(row)  # Pass the appropriate data
 
-                    # Process the uploaded CSV file
-                    if 'upload' in request.FILES:
-                        uploaded_file = request.FILES['upload']
-                        df = pd.read_csv(uploaded_file)
-                        df = CropPricePrediction.convert_date_and_time(df)
-
-                        # Make predictions based on user input
-                        predicted_min_price, predicted_max_price = CropPricePrediction.predict_price(user_input, df)
+                    # Now you can collect user inputs and make predictions
+                    form = UserInputForm(request.POST)
+                    if form.is_valid():
+                        user_input = form.cleaned_data
+                        predicted_min_price, predicted_max_price = CropPricePrediction.predict_price(user_input, rf_max, rf_min)
                         
                         # Render the results
-                        return render(request, 'main/prediction_results.html', {
+                        return render(request, 'main/results.html', {
                             'predicted_min_price': predicted_min_price,
                             'predicted_max_price': predicted_max_price,
                             'user_input': user_input,
                         })
+                else:
+                    print("something wrong", row)
 
     else:
         form = UploadFileForm()
